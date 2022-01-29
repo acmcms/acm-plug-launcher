@@ -1,5 +1,6 @@
 package ru.myx.acm.launcher;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -234,7 +235,7 @@ public final class Plugin extends AbstractPluginInstance {
 						.prepareStatement( "UPDATE l1Tasks SET taskLastRun=?, taskLastRunLength=?, taskLastResult=?, taskRunnerData=? WHERE taskGuid=?" )) {
 					ps.setTimestamp( 1, new Timestamp( date ) );
 					ps.setInt( 2, (int) (runLength / 1000) );
-					ps.setBytes( 3, result.getBytes( Engine.CHARSET_UTF8 ) );
+					ps.setBytes( 3, result.getBytes( StandardCharsets.UTF_8 ) );
 					final TransferCopier binary = Xml.toXmlBinary( "data", taskInternalData, false, null, null, 0 );
 					final int length = (int) binary.length();
 					ps.setBinaryStream( 4, binary.nextCopy().toInputStream(), length );
@@ -246,7 +247,7 @@ public final class Plugin extends AbstractPluginInstance {
 						.prepareStatement( "UPDATE l1Tasks SET taskLastRun=?, taskLastRunLength=?, taskLastResult=? WHERE taskGuid=?" )) {
 					ps.setTimestamp( 1, new Timestamp( date ) );
 					ps.setInt( 2, (int) (runLength / 1000) );
-					ps.setBytes( 3, result.getBytes( Engine.CHARSET_UTF8 ) );
+					ps.setBytes( 3, result.getBytes( StandardCharsets.UTF_8 ) );
 					ps.setString( 4, key );
 					ps.executeUpdate();
 				}

@@ -1,10 +1,10 @@
 package ru.myx.acm.launcher;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.myx.ae3.Engine;
 import ru.myx.ae3.binary.Transfer;
 
 /**
@@ -31,18 +31,18 @@ final class TaskList {
 			if (bytes == null || bytes.length == 0) {
 				task.setLastResult( "" );
 			} else {
-				task.setLastResult( Transfer.createBuffer( bytes ).toString( Engine.CHARSET_UTF8 ) );
+				task.setLastResult( Transfer.createBuffer( bytes ).toString( StandardCharsets.UTF_8 ) );
 			}
 		}
 		task.setTaskName( rs.getString( "taskRunner" ) );
 		
 		{
 			final byte[] bytes = rs.getBytes( "taskRunnerSettings" );
-			task.setTaskSettings( Transfer.createBuffer( bytes ).toString( Engine.CHARSET_UTF8 ) );
+			task.setTaskSettings( Transfer.createBuffer( bytes ).toString( StandardCharsets.UTF_8 ) );
 		}
 		{
 			final byte[] bytes = rs.getBytes( "taskRunnerData" );
-			task.setTaskData( Transfer.createBuffer( bytes ).toString( Engine.CHARSET_UTF8 ) );
+			task.setTaskData( Transfer.createBuffer( bytes ).toString( StandardCharsets.UTF_8 ) );
 		}
 		return task;
 	}
